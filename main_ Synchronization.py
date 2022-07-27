@@ -3,6 +3,8 @@
 # All rights reserved
 
 import vk_api, random
+import requests
+import traceback
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
 
@@ -10,7 +12,7 @@ from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 Получите "GROUPS_TOKEN" через сайт: https://vkhost.github.io/ нажмите "Настройки" - "Сообщество". Укажите: "ID Приложения" (6121396 - VkAdmin) и "ID сообщества" на ID вашего сообщества.
 Get "GROUPS_TOKEN" through the site: https://vkhost.github.io/ click "Settings" - "Community". Specify: "Application ID" (6121396 - VkAdmin) and "Community ID" for your community ID.
 '''
-vkExample = vk_api.VkApi(token = :"GROUPS_TOKEN") 
+vkExample = vk_api.VkApi(token = "GROUPS_TOKEN") 
 
 
 '''
@@ -26,7 +28,7 @@ bugChatId = 0 #PeerId чата, куда будет приходить сооб�
 
 
 def msgSend(peer,ms,att = None, keyb = None):
-    msId = self.vk.method('messages.send', {'peer_id': peer,'random_id': random.randint(0, 2**64), 'message': ms, 'attachment': att,'keyboard': keyb})
+    msId = vkExample.method('messages.send', {'peer_id': peer,'random_id': random.randint(0, 2**64), 'message': ms, 'attachment': att,'keyboard': keyb})
     
     return msId
 
@@ -38,7 +40,7 @@ def bot():
                     event_obj = event.obj.get('message')
                     userId = event_obj.get('from_id')
                     peerId = event_obj.get('peer_id')
-                    text = event_obj.gey('text')
+                    text = event_obj.get('text')
                     ms = text.lower()
                     
                     if ms == "peer":
@@ -51,7 +53,7 @@ def bot():
         except requests.exceptions.ReadTimeout:
             msgSend(bugChatId, '&#9888; Ошибка: Перезагрузка вк.')
         except Exception as e:
-            err_tx = f'&#9888; Ошибка: {e}\n&#128169; Пользователь: @id{user_id} (Профиль)\n&#129511; Беседа: {peer_id}\n&#128140; Текст сообщения: {text_id}\n\n&#9881; Детальная ошибка:\n\n {traceback.format_exc()}'
+            err_tx = f'&#9888; Ошибка: {e}\n&#128169; Пользователь: @id{userId} (Профиль)\n&#129511; Беседа: {peerId}\n&#128140; Текст сообщения: {text}\n\n&#9881; Детальная ошибка:\n\n {traceback.format_exc()}'
             msgSend(bugChatId, err_tx)
             print(e)
             
