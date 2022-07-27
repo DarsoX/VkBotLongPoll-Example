@@ -2,8 +2,7 @@
 # Copyright 2022 Darsox <https://t.me/DarsoX>
 # All rights reserved
 
-import vk_api, random
-import requests
+import vk_api, random, requests
 import traceback
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 
