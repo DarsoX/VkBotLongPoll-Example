@@ -26,35 +26,35 @@ bugChatId = 0 #PeerId чата, куда будет приходить сооб�
 
 
 def msgSend(peer,ms,att = None, keyb = None):
-	msId = self.vk.method('messages.send', {'peer_id': peer,'random_id': random.randint(0, 2**64), 'message': ms, 'attachment': att,'keyboard': keyb})
-	
-	return msId
+    msId = self.vk.method('messages.send', {'peer_id': peer,'random_id': random.randint(0, 2**64), 'message': ms, 'attachment': att,'keyboard': keyb})
+    
+    return msId
 
 def bot():
-	while True:
-		try:
-			for event in lp.listen():
-				if event.type == VkBotEventType.MESSAGE_NEW:
-					event_obj = event.obj.get('message')
-					userId = event_obj.get('from_id')
-					peerId = event_obj.get('peer_id')
-					text = event_obj.gey('text')
-					ms = text.lower()
-					
-					if ms == "peer":
-						msgSend(peerId, f"PeerId чата: {peerId}")
-					
-					if ms == "привет":
-						msgSend(peerId, "Ну привет")
-					if ms == "арт":
-						msgSend(peerId,"",att = "photo-62399927_457270315")
-		except requests.exceptions.ReadTimeout:
-			msgSend(bugChatId, '&#9888; Ошибка: Перезагрузка вк.')
-		except Exception as e:
-			err_tx = f'&#9888; Ошибка: {e}\n&#128169; Пользователь: @id{user_id} (Профиль)\n&#129511; Беседа: {peer_id}\n&#128140; Текст сообщения: {text_id}\n\n&#9881; Детальная ошибка:\n\n {traceback.format_exc()}'
-			msgSend(bugChatId, err_tx)
-			print(e)
-			
+    while True:
+        try:
+            for event in lp.listen():
+                if event.type == VkBotEventType.MESSAGE_NEW:
+                    event_obj = event.obj.get('message')
+                    userId = event_obj.get('from_id')
+                    peerId = event_obj.get('peer_id')
+                    text = event_obj.gey('text')
+                    ms = text.lower()
+                    
+                    if ms == "peer":
+                        msgSend(peerId, f"PeerId чата: {peerId}")
+                    
+                    if ms == "привет":
+                        msgSend(peerId, "Ну привет")
+                    if ms == "арт":
+                        msgSend(peerId,"",att = "photo-62399927_457270315")
+        except requests.exceptions.ReadTimeout:
+            msgSend(bugChatId, '&#9888; Ошибка: Перезагрузка вк.')
+        except Exception as e:
+            err_tx = f'&#9888; Ошибка: {e}\n&#128169; Пользователь: @id{user_id} (Профиль)\n&#129511; Беседа: {peer_id}\n&#128140; Текст сообщения: {text_id}\n\n&#9881; Детальная ошибка:\n\n {traceback.format_exc()}'
+            msgSend(bugChatId, err_tx)
+            print(e)
+            
 
 if __name__ == '__main__':
-	bot()
+    bot()
