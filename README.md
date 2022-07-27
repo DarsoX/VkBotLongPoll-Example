@@ -1,5 +1,6 @@
-![alt tag](https://i.ibb.co/vDYP8Qy/Logo-VKApi.png "Баннер")
-
+<p align="center">
+ <img src="https://i.ibb.co/vDYP8Qy/Logo-VKApi.png" alt="Баннер"/>
+</p>
 
 
 # VkBotLongPoll-Example
